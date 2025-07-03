@@ -40,24 +40,11 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F9F7F1] flex flex-col">
-      {/* Navbar */}
-      <nav className="bg-[#A7B8CC] rounded-[2rem] mx-4 mt-4 flex items-center justify-between px-8 py-4">
-        <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="WisdomWaves Logo" width={48} height={48} />
-            <span className="font-semibold text-[#253047] text-lg">WisdomWaves</span>
-          </Link>
-        </div>
-        <div className="flex items-center gap-8 text-[#253047] font-semibold text-lg">
-          <Link href="/signup" className="hover:underline">Sign up</Link>
-          <Link href="#" className="hover:underline">Learn More</Link>
-          <Link href="#" className="hover:underline">Contact Us</Link>
-        </div>
-      </nav>
+  
 
-      {/* Signup Form */}
+   
       <main className="flex-1 flex flex-col items-center justify-center px-4">
+   {/* Signup Form */}
         <h1 className="text-5xl md:text-6xl font-extrabold text-[#232946] text-center mb-6 leading-tight">
           Create your account
         </h1>
@@ -120,6 +107,6 @@ export default function SignupPage() {
           <Link href="/login" className="text-[#3B6C8E] hover:underline">Login</Link>
         </div>
       </main>
-    </div>
+
   );
 } 

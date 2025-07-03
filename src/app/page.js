@@ -7,19 +7,19 @@ export default function Home() {
 
   return (
     <div className="bg-[#F9F7F1] min-h-screen flex flex-col">
-      {/* Logo */}
-      <header className="flex flex-row justify-center items-center gap-2 pt-12 pb-6">
-         <Image src="/logo.png" alt="WisdomWaves Logo" width={64} height={64} />
-        <span className="text-2xl font-semibold text-[#2d3748]">WisdomWaves</span>
-      </header>
 
       {/* Main Title */}
-      <section className="flex flex-col items-center text-center px-4">
+      <section className="h-130 flex flex-col  justify-center items-center text-center px-4">
+      {/* Logo */}
+      <header className= "flex flex-row items-center gap-2 pt-12 pb-6">
+         <Image src="/logo.png" alt="WisdomWaves Logo" width={64} height={64} />
+        <span className="text-2xl font-semibold text-[#2d3748]">WisdomWaves</span>
+      </header> 
         <h1 className="text-4xl md:text-5xl font-extrabold text-[#232946] leading-tight mb-4">
           Your Partner for Academic<br />Research and Innovation
         </h1>
-        <p className="text-lg text-[#4b5563] mb-6 max-w-2xl">
-          WisdomWaves helps you turn ideas into articles, proposals, patents, or thesis-ready documents using a guided, structured process.
+        <p className="font-bold text-lg text-[#4b5563] mb-6 max-w-2xl">
+          WisdomWaves helps you turn ideas into articles, proposals, patents, <br />or thesis-ready documents using a guided, structured process.
         </p>
         <button className="bg-[#232946] text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-[#1a1a2e] transition mb-10 cursor-pointer"
          onClick={() => router.push('/login')}>
@@ -28,7 +28,7 @@ export default function Home() {
       </section>
 
       {/* Our Partners */}
-      <section className="bg-[#dbeafe] py-6 px-4 mt-2">
+      <section className="h-50 bg-[#dbeafe] py-6 px-4 mt-2">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
           <span className="text-lg font-medium text-[#232946] mb-4">Our Partners</span>
           <div className="flex flex-wrap justify-center gap-8">
@@ -40,7 +40,7 @@ export default function Home() {
       </section>
 
       {/* What is WisdomWaves */}
-      <section className="py-12 px-4 text-center bg-white">
+      <section className="h-90 py-12 px-4 text-center bg-white">
         <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#232946]">What Is WisdomWaves?</h2>
         <p className="text-[#2563eb] text-lg max-w-3xl mx-auto font-medium">
           WisdomWaves is an AI-guided academic research platform that helps you move from an early-stage idea to a fully structured output. Whether you're working on a thesis, proposal, research article, or patent, WisdomWaves guides you step by step through your journey using a structured flow and specialized final-stage modules called "Gates."
