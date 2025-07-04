@@ -57,31 +57,31 @@ export default function Home() {
       </section>
 
       {/* 4 Waves*/}
-      <section className="py-12 px-4 bg-[#F9F7F1] text-center">
+      <section className="py-12 px-4 bg-[#F9F7F1] text-center font-serif">
         <h2 className="text-2xl md:text-3xl font-bold mb-6 text-[#232946]">Personalized Research Guidance in 4 Waves</h2>
         <p className="mb-8 text-[#4b5563]">Move from idea to output using our guided process—no matter your research experience.</p>
-        <div className="flex flex-col items-center gap-4">
-          <div className="bg-white rounded-lg shadow p-6 w-full max-w-md text-left">
-            <ul className="space-y-3">
-              <li>
-                <span className="font-semibold text-[#232946]">Wave 1a – Idea Generation:</span>
-                <span className="ml-2 text-[#4b5563]">Brainstorm, refine, and validate your research topic with AI assistance.</span>
-              </li>
-              <li>
-                <span className="font-semibold text-[#232946]">Wave 1b – Critical Questioning:</span>
-                <span className="ml-2 text-[#4b5563]">Develop key questions, methods, and scientific workflows.</span>
-              </li>
-              <li>
-                <span className="font-semibold text-[#232946]">Wave 2 – Data Collection:</span>
-                <span className="ml-2 text-[#4b5563]">Collect, analyze, and structure your research data.</span>
-              </li>
-              <li>
-                <span className="font-semibold text-[#232946]">Wave 3 – Drafting:</span>
-                <span className="ml-2 text-[#4b5563]">Transform your analysis into structured research drafts.</span>
-              </li>
-            </ul>
-            <a href="#" className="block mt-6 text-[#2563eb] font-semibold hover:underline">Ready to choose your output? → Explore the Gates</a>
+        <div className="flex flex-col gap-6 max-w-2xl mx-auto">
+
+          <div className="bg-white rounded-lg shadow p-6 text-left">
+            <h3 className="font-semibold text-[#232946]">Wave 1a – Idea Generation</h3>
+            <p className="text-[#4b5563]">Brainstorm, refine, and validate your research topic with AI assistance.</p>
           </div>
+
+          <div className="bg-white rounded-lg shadow p-6 text-left">
+            <h3 className="font-semibold text-[#232946]">Wave 1b – Critical Questioning</h3>
+            <p className="text-[#4b5563]">Develop key questions, methods, and scientific workflows.</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow p-6 text-left">
+            <h3 className="font-semibold text-[#232946]">Wave 2 – Data Collection</h3>
+            <p className="text-[#4b5563]">Collect, analyze, and structure your research data.</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow p-6 text-left">
+            <h3 className="font-semibold text-[#232946]">Wave 3 – Drafting</h3>
+            <p className="text-[#4b5563]">Transform your analysis into structured research drafts.</p>
+          </div>
+
         </div>
       </section>
 
