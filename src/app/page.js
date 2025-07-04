@@ -29,7 +29,7 @@ export default function Home() {
       </section>
 
       {/* Our Partners */}
-      <section className="h-50 bg-[#dbeafe] py-6 px-4 mt-2">
+      <section className="h-50 bg-[#7fb7bd] py-6 px-4 mt-2">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
           <span className="text-xl font-extrabold text-[#ffffff] mb-4 font-sans text-outline-black font-serif justify-center">Our Partners</span>
           <div className="flex flex-wrap justify-center gap-50 items-center">
@@ -42,13 +42,13 @@ export default function Home() {
 
       {/* What is WisdomWaves */}
       <section className="h-90 py-12 px-4 text-center bg-white">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#232946] font-serif">What Is WisdomWaves?</h2>
-        <p className="text-[#2563eb] text-xl max-w-3xl mx-auto font-medium font-serif mb-6 font-extrabold">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#00296f] font-serif">What Is WisdomWaves?</h2>
+        <p className="text-[#00296f] text-xl max-w-3xl mx-auto font-medium font-serif mb-6 font-extrabold">
           <Typewriter
             words={[
               "WisdomWaves is an AI-guided academic research platform that helps you move from an early-stage idea to a fully structured output. Whether you're working on a thesis, proposal, research article, or patent, WisdomWaves guides you step by step through your journey using a structured flow and specialized final-stage modules called 'Gates'."
             ]}
-            typeSpeed={25}
+            typeSpeed={45}
             deleteSpeed={10}
             
             loop={false}
