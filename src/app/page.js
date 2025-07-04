@@ -86,7 +86,7 @@ export default function Home() {
       </section>
 
       {/* Explore The Gates */}
-      <section className="py-12 px-4 bg-white">
+      <section className="py-12 px-4 bg-white text-center font-serif ">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-[#232946] text-center">Explore the Gates</h2>
         <div className="flex flex-wrap justify-center gap-6">
           <div className="bg-[#f1f5f9] rounded-xl p-6 w-60 shadow text-left">
@@ -116,7 +116,7 @@ export default function Home() {
       </section>
 
       {/* Bottom */}
-      <section className="py-12 px-4 bg-[#F9F7F1] flex justify-center">
+      <section className="py-12 px-4 bg-[#F9F7F1] flex justify-center font-serif">
         <div className="bg-[#b6c6e6] rounded-2xl p-8 w-full max-w-2xl text-center shadow">
           <h3 className="text-2xl font-bold mb-4 text-[#232946]">Ready to Transform Your Research?</h3>
           <p className="mb-6 text-[#232946]">Join researchers and academics who trust WisdomWaves to guide their journey from idea to publication.</p>
@@ -130,7 +130,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#F9F7F1] border-t border-[#e5e7eb] py-8 px-4 mt-auto">
+      <footer className="bg-[#F9F7F1] border-t border-[#e5e7eb] py-8 px-4 mt-auto font-serif">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-2 mb-2">
