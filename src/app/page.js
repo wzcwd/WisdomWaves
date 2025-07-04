@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Typewriter } from "react-simple-typewriter";
 
 export default function Home() {
   const router = useRouter();
@@ -12,16 +13,16 @@ export default function Home() {
       <section className="h-130 flex flex-col  justify-center items-center text-center px-4">
       {/* Logo */}
       <header className= "flex flex-row items-center gap-2 pt-12 pb-6">
-         <Image src="/logo.png" alt="WisdomWaves Logo" width={64} height={64} />
-        <span className="text-2xl font-semibold text-[#2d3748]">WisdomWaves</span>
+         <Image src="/logo.svg" alt="WisdomWaves Logo" width={64} height={64} />
+        <span className="text-2xl font-semibold text-[#2d3748] font-serif">WisdomWaves</span>
       </header> 
-        <h1 className="text-4xl md:text-5xl font-extrabold text-[#232946] leading-tight mb-4">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#232946] leading-tight mb-4 font-serif">
           Your Partner for Academic<br />Research and Innovation
         </h1>
-        <p className="font-bold text-lg text-[#4b5563] mb-6 max-w-2xl">
+        <p className="font-bold text-lg text-[#4b5563] mb-6 max-w-2xl font-serif">
           WisdomWaves helps you turn ideas into articles, proposals, patents, <br />or thesis-ready documents using a guided, structured process.
         </p>
-        <button className="bg-[#232946] text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-[#1a1a2e] transition mb-10 cursor-pointer"
+        <button className="bg-[#232946] text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-[#1a1a2e] transition mb-10 cursor-pointer font-serif"
          onClick={() => router.push('/login')}>
           Get Started →
         </button>
@@ -30,20 +31,28 @@ export default function Home() {
       {/* Our Partners */}
       <section className="h-50 bg-[#dbeafe] py-6 px-4 mt-2">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
-          <span className="text-lg font-medium text-[#232946] mb-4">Our Partners</span>
-          <div className="flex flex-wrap justify-center gap-8">
-            <Image src="/file.svg" alt="Hotchkiss" width={80} height={32} />
-            <Image src="/globe.svg" alt="UCalgary" width={80} height={32} />
-            <Image src="/window.svg" alt="SAIL" width={80} height={32} />
+          <span className="text-xl font-extrabold text-[#ffffff] mb-4 font-sans text-outline-black font-serif justify-center">Our Partners</span>
+          <div className="flex flex-wrap justify-center gap-50 items-center">
+            <Image src="/hotchkiss.svg" alt="Hotchkiss" width={120} height={0} />
+            <Image src="/UCalgary.svg" alt="UCalgary" width={140} height={0} />
+            <Image src="/sail.svg" alt="SAIL" width={100} height={0} className="rounded-full" />
           </div>
         </div>
       </section>
 
       {/* What is WisdomWaves */}
       <section className="h-90 py-12 px-4 text-center bg-white">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#232946]">What Is WisdomWaves?</h2>
-        <p className="text-[#2563eb] text-lg max-w-3xl mx-auto font-medium">
-          WisdomWaves is an AI-guided academic research platform that helps you move from an early-stage idea to a fully structured output. Whether you're working on a thesis, proposal, research article, or patent, WisdomWaves guides you step by step through your journey using a structured flow and specialized final-stage modules called "Gates."
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#232946] font-serif">What Is WisdomWaves?</h2>
+        <p className="text-[#2563eb] text-xl max-w-3xl mx-auto font-medium font-serif mb-6 font-extrabold">
+          <Typewriter
+            words={[
+              "WisdomWaves is an AI-guided academic research platform that helps you move from an early-stage idea to a fully structured output. Whether you're working on a thesis, proposal, research article, or patent, WisdomWaves guides you step by step through your journey using a structured flow and specialized final-stage modules called 'Gates'."
+            ]}
+            typeSpeed={25}
+            deleteSpeed={10}
+            
+            loop={false}
+          />
         </p>
       </section>
 
