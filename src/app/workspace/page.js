@@ -97,11 +97,7 @@ export default function Workspace() {
             <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-base whitespace-pre-line ${msg.role === "user" ? "bg-[#e9f0fa] text-[#232946]" : "bg-white text-[#232946] border border-[#f0f0f0]"}`}>
                 {msg.role === "assistant" && msg.summary ? msg.summary : msg.content}
-                {msg.image && (
-                  <div className="mt-2">
-                    <img src={msg.image} alt="uploaded" className="max-w-[180px] rounded-lg border" />
-                  </div>
-                )}
+                {msg.image}
               </div>
             </div>
           ))}
@@ -193,14 +189,5 @@ export default function Workspace() {
         </div>
       </aside>
     </main>
-  );
-}
-
-function Section({ title, children }) {
-  return (
-    <section className="mb-8">
-      <h2 className="text-2xl font-bold text-[#232946] mb-3">{title}</h2>
-      {children}
-    </section>
   );
 }
