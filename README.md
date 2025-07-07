@@ -41,6 +41,9 @@ Create a `.env` file in the `wisdomwaves/` directory with the following content:
 ```
 DATABASE_URL="file:./dev.db"
 ```
+```
+OPENAI_API_KEY="Your API Key"
+```
 
 ### 3. Initialize the database
 

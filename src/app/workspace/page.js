@@ -1,90 +1,206 @@
 "use client";
-import Image from "next/image";
+import { useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 export default function Workspace() {
+  // Chat-related state
+  const [messages, setMessages] = useState([
+    { role: "assistant", summary: "Hi! How can I help you turn your idea into content magic?", content: "Hi! How can I help you turn your idea into content magic?" },
+  ]);
+  const [input, setInput] = useState("");
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const fileInputRef = useRef();
+  const mainContentRef = useRef();
+
+  // Send message
+  const handleSend = async (fileTextOverride) => {
+    if ((!input && !image && !fileTextOverride) || loading) return;
+    setError("");
+    let fileText = fileTextOverride || (image && image.text ? `\n\n[Content]\n${image.text}` : '');
+    const newMessages = [...messages, { role: "user", content: (input ? input : "") + fileText, image }];
+    setMessages(newMessages);
+    setInput("");
+    setImage(null);
+    setLoading(true);
+    try {
+
+      const payload = newMessages.map(m => ({ role: m.role, content: m.content }));
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: payload }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "AI error");
+      // AI reply: summary and content
+      setMessages([...newMessages, { role: "assistant", summary: data.summary, content: data.content }]);
+
+      setTimeout(() => { mainContentRef.current?.scrollTo?.(0, 0); }, 100);
+    } catch (e) {
+      setError(e.message || "AI error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle file upload (PDF only, upload to server for parsing, auto-send to AI)
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.type === 'application/pdf') {
+      // go to server side to parse
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/api/parsepdf', {
+        method: 'POST',
+        body: formData,
+      });
+      let data;
+      try {
+        data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unknown server error');
+      } catch (err) {
+        alert('PDF parse failed: ' + (err.message || 'Unexpected error'));
+        return;
+      }
+      const pdfText = data.text;
+      setImage({ url: '', name: file.name, type: file.type, text: pdfText });
+      // Automatically send to AI
+      await handleSend(pdfText);
+    } else {
+      alert('Only PDF files are supported');
+    }
+  };
+
+  // Display only the last AI content
+  const lastAIContent = [...messages].reverse().find(m => m.role === "assistant" && m.content)?.content;
+
   return (
-   
-    <main className=" flex flex-1 flex-row p-4 gap-4 ">
-      {/* Left Panel: Chat Area */}
-      <div className="bg-[#b6c6e6] rounded-2xl p-6 flex flex-1 flex-col w-[400px] min-w-[340px] max-w-[440px] ">
-        {/* Chat/Dataset */}
-        <div className="flex flex-row gap-4 mb-4">
-          {/* Chat List */}
-          <div className="flex-1 bg-white rounded-lg p-2 flex flex-col h-[180px]">
-            <div className="font-bold underline mb-2 cursor-pointer">Chats</div>
-            <div className="flex-1 overflow-y-auto">
-              <div>Chat 1</div>
-              <div>Chat 2</div>
-              <div>Chat 3</div>
-            </div>
+    <main className="flex flex-1 flex-row bg-[#F9F7F1] font-sans">
+      {/* Sidebar: chatbox */}
+      <aside className="flex flex-col w-[380px] min-w-[260px] max-w-[420px] bg-[#fafafa] border-r border-[#f0f0f0] ">
+        {/* top logo and title */}
+        <div className="flex items-center justify-between px-6 pt-6 pb-2">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-semibold text-[#4b5563] tracking-tight">Thesis Gate</span>
           </div>
-          {/* Synthetic Datasets */}
-          <div className="flex-1 bg-white rounded-lg p-2 flex flex-col h-[180px]">
-            <div className="font-bold underline mb-2 cursor-pointer">Synthetic Datasets</div>
-            <div className="flex-1 overflow-y-auto">
-              <div>DS 1</div>
-              <div>DS 2</div>
-              <div>DS 3</div>
-            </div>
+          <div className="flex items-center gap-2">
+            <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-[#ececec] transition"><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M4 12h16M10 6l-6 6 6 6" stroke="#4b5563" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+            <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-[#ececec] transition"><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" stroke="#4b5563" strokeWidth="2"/><path d="M8 8h8v8H8z" fill="#b6c6e6"/></svg></button>
           </div>
         </div>
-        {/* Chat Input Area */}
-        <div className="flex-1 flex flex-col min-h-0">
-          <div className="bg-white rounded-xl flex-1 p-4 mb-2 flex flex-col min-h-0">
-            <div className="font-bold mb-2">Ask anything</div>
-            {/* Chat content area can add overflow-y-auto */}
+      {/* Chat history */}
+        <div className="flex-1 overflow-y-auto px-6 py-2 flex flex-col gap-4 ">
+          {messages.filter(m => m.role !== "assistant" || m.summary).map((msg, idx) => (
+            <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-base whitespace-pre-line ${msg.role === "user" ? "bg-[#e9f0fa] text-[#232946]" : "bg-white text-[#232946] border border-[#f0f0f0]"}`}>
+                {msg.role === "assistant" && msg.summary ? msg.summary : msg.content}
+                {msg.image && (
+                  <div className="mt-2">
+                    <img src={msg.image} alt="uploaded" className="max-w-[180px] rounded-lg border" />
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="flex justify-start"><div className="max-w-[80%] rounded-2xl px-4 py-2 text-base bg-white text-[#b6c6e6] border border-[#f0f0f0] animate-pulse">AI Generating...</div></div>
+          )}
+          {error && (
+            <div className="text-red-500 text-xs mt-2">{error}</div>
+          )}
+        </div>
+        {/* Bottom input and model selection area */}
+        <div className="px-0 pb-6 pt-2">
+          {/* Model selection area */}
+          <div className="flex items-center gap-2 px-6 pb-2">
+            <span className="flex items-center gap-1 text-[#4b5563] text-base font-medium"><svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#b6c6e6"/><text x="7" y="16" fontSize="7" fill="#232946">🧠</text></svg>GPT 4o-mini</span>
           </div>
-          <div className="flex items-center mt-2">
-            <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center mr-2 text-xl">+</button>
-            <input className="flex-1 rounded-full px-4 py-2 border border-gray-300" placeholder="Type a message..." />
-            <button className="ml-2 text-2xl">🎤</button>
+          {/* Input area */}
+          <div className="px-2">
+            <div className="flex items-end bg-white rounded-2xl shadow border border-[#ececec] px-4 py-3 gap-2">
+              <button
+                className="w-8 h-8 flex items-center justify-center bg-[#e9f0fa] rounded-full text-xl hover:bg-[#b6c6e6] transition border border-[#e9f0fa]"
+                onClick={() => fileInputRef.current.click()}
+                title="Upload the file"
+                disabled={loading}
+              >
+                <span role="img" aria-label="upload">＋</span>
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="application/pdf,.pdf"
+                className="hidden"
+                onChange={handleImageChange}
+                disabled={loading}
+              />
+              <input
+                className="flex-1 bg-transparent outline-none border-none text-base px-2 py-1"
+                placeholder="Turn your idea into content magic - start here"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } }}
+                disabled={loading}
+              />
+              <button
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-[#b6c6e6] hover:bg-[#232946] transition"
+                onClick={() => handleSend()}
+                disabled={(!input && !image) || loading}
+              >
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M2 21l21-9-21-9v7l15 2-15 2v7z" fill={(!input && !image || loading) ? '#b6c6e6' : '#fff'} /></svg>
+              </button>
+            </div>
+            {image && (
+              <div className="flex items-center gap-2 mt-2 px-2">
+                <div className="flex flex-col text-xs text-[#232946] bg-[#f8fafc] rounded px-2 py-1 border max-w-[200px] overflow-x-auto">
+                  <span>{image.name}</span>
+                  <span className="text-gray-500">{image.type}</span>
+                  {image.text && <span className="text-gray-400 mt-1 max-h-16 overflow-y-auto">{image.text.slice(0, 200)}{image.text.length > 200 ? '...' : ''}</span>}
+                </div>
+                <button className="text-xs text-red-500 underline" onClick={() => setImage(null)}>Remove file</button>
+              </div>
+            )}
           </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <div className=" flex flex-1 px-12 py-10 bg-[#F9F7F1]  overflow-auto" ref={mainContentRef}>
+        <div className="max-w-3xl mx-auto">
+          {lastAIContent ? (
+            <div className="prose prose-lg max-w-none text-[#232946] bg-white rounded-2xl shadow p-8">
+              <ReactMarkdown>{lastAIContent}</ReactMarkdown>
+            </div>
+          ) : (
+            <div className="text-[#b6c6e6] text-xl text-center mt-24">AI responses will appear here</div>
+          )}
         </div>
       </div>
 
-      {/* Right Panel */}
-      <div className="flex flex-col flex-1 min-w-[400px]  gap-4 min-h-0">
-        <div className="flex flex-row gap-4 mb-4">
-          {/* Current Stage */}
-          <div className="bg-white rounded-xl shadow p-4 flex flex-col min-h-[120px] flex-1">
-            <div className="font-bold mb-2">Current Stage</div>
-            <div className="flex flex-row gap-4">
-              <StageBox title="Wave 1a – Idea Generation" desc="Brainstorm, refine, and validate your research topic" />
-              <StageBox title="Wave 1b – Critical Questioning" desc="Organize critical questions, methods, and scientific context" />
-              <StageBox title="Wave 2 – Data Collection" desc="Upload existing data or simulate with synthetic/clinical datasets" />
-              <StageBox title="Wave 3 – Drafting" desc="Transform your insights into structured research drafts" />
-            </div>
-          </div>
-          {/* Agent in use */}
-          <div className="bg-white rounded-xl shadow p-4 flex flex-col min-h-[80px] min-w-[220px] items-center">
-            <div className="font-bold mb-2">Agent in use</div>
-            <div className="bg-[#e9f0fa] rounded-lg p-3 w-full text-center">
-              <div className="font-semibold">ArticleGate</div>
-              <div className="text-xs text-gray-500">Research article drafting and publication guidance</div>
-            </div>
+      {/* Right Sidebar */}
+      <aside className="w-[370px] min-w-[300px] max-w-[400px] bg-white border-l border-[#e5e7eb] px-6 py-6 shadow-lg flex flex-col">
+        <div className="text-lg font-bold text-[#232946] mb-4">Waves</div>
+        <div className="flex-1 overflow-y-auto flex flex-col gap-4">
+          <div className="bg-[#f8fafc] rounded-xl p-4 shadow flex flex-col gap-1">
+            <div className="text-[#232946] font-semibold text-base mb-1">Wave1</div>
+            <div className="text-xs text-gray-500 mb-1">wave2</div>
+            <div className="text-[#4b5563] text-sm line-clamp-3">wave3</div>
           </div>
         </div>
-        {/* Output Area */}
-        <div className="bg-[#c2bdb6] rounded-2xl p-6 flex-1 flex flex-col min-h-0">
-          <div className="font-bold text-2xl mb-4">Title of Output</div>
-          <div className="flex-1 overflow-y-auto pr-2">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec leo id felis pharetra consequat vitae et nisi. Aliquam nibh velit, gravida et est sed, pulvinar fringilla ligula. ...
-            </p>
-            {/* Here you can dynamically render thesis/article/patent content */}
-          </div>
-        </div>
-      </div>
+      </aside>
     </main>
   );
 }
 
-// Stage box component
-function StageBox({ title, desc }) {
+function Section({ title, children }) {
   return (
-    <div className="flex flex-col items-start bg-[#f8fafc] rounded-lg p-2 min-w-[160px]">
-      <div className="text-xs font-bold mb-1">{title}</div>
-      <div className="text-xs text-gray-500">{desc}</div>
-    </div>
+    <section className="mb-8">
+      <h2 className="text-2xl font-bold text-[#232946] mb-3">{title}</h2>
+      {children}
+    </section>
   );
-} 
+}
