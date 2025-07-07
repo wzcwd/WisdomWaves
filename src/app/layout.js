@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
               </Link>
             </div>
             <div className="flex items-center gap-8 text-[#253047] font-semibold text-lg font-serif">
-              <Link href="/signup" className="hover:underline">Sign up</Link>
+              <Link href="/signup" className="hover:underline">Sign Up</Link>
               <Link href="#" className="hover:underline">Learn More</Link>
               <Link href="#" className="hover:underline">Contact Us</Link>
             </div>
