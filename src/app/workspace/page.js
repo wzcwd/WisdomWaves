@@ -78,7 +78,7 @@ export default function Workspace() {
   const lastAIContent = [...messages].reverse().find(m => m.role === "assistant" && m.content)?.content;
 
   return (
-    <main className="flex flex-1 flex-row bg-[#F9F7F1] font-sans">
+    <main className="flex h-screen flex-row bg-[#F9F7F1] font-sans">
       {/* Sidebar: chatbox */}
       <aside className="flex flex-col w-[380px] min-w-[260px] max-w-[420px] bg-[#fafafa] border-r border-[#f0f0f0] ">
         {/* top logo and title */}
@@ -135,8 +135,8 @@ export default function Workspace() {
                 disabled={loading}
               />
               <input
-                className="flex-1 bg-transparent outline-none border-none text-base px-2 py-1"
-                placeholder="Turn your idea into content magic - start here"
+                className="flex-1 bg-transparent outline-none border-none text-black px-2 py-1"
+                placeholder="Your Idea, Your Content: "
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } }}
@@ -165,7 +165,7 @@ export default function Workspace() {
       </aside>
 
       {/* Main Content */}
-      <div className=" flex flex-1 px-12 py-10 bg-[#F9F7F1]  overflow-auto" ref={mainContentRef}>
+      <div className="flex flex-1 px-12 py-10 bg-[#F9F7F1] overflow-y-auto" ref={mainContentRef}>
         <div className="max-w-3xl mx-auto">
           {lastAIContent ? (
             <div className="prose prose-lg max-w-none text-[#232946] bg-white rounded-2xl shadow p-8">
@@ -178,7 +178,7 @@ export default function Workspace() {
       </div>
 
       {/* Right Sidebar */}
-      <aside className="w-[370px] min-w-[300px] max-w-[400px] bg-white border-l border-[#e5e7eb] px-6 py-6 shadow-lg flex flex-col">
+      <aside className="w-[370px] min-w-[300px] max-w-[400px] bg-white border-l border-[#e5e7eb] px-6 py-6 shadow-lg flex flex-col overflow-y-auto">
         <div className="text-lg font-bold text-[#232946] mb-4">Waves</div>
         <div className="flex-1 overflow-y-auto flex flex-col gap-4">
           <div className="bg-[#f8fafc] rounded-xl p-4 shadow flex flex-col gap-1">
