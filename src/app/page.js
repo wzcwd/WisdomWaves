@@ -62,22 +62,22 @@ export default function Home() {
         <p className="mb-8 text-[#4b5563]">Move from idea to output using our guided process—no matter your research experience.</p>
         <div className="flex flex-col gap-6 max-w-2xl mx-auto">
 
-          <div className="bg-white rounded-lg shadow p-6 text-left">
+          <div className="bg-[#e0f7fa] rounded-lg shadow p-6 text-left">
             <h3 className="font-semibold text-[#232946]">Wave 1a – Idea Generation</h3>
             <p className="text-[#4b5563]">Brainstorm, refine, and validate your research topic with AI assistance.</p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6 text-left">
+          <div className="bg-[#fce4ec] rounded-lg shadow p-6 text-left">
             <h3 className="font-semibold text-[#232946]">Wave 1b – Critical Questioning</h3>
             <p className="text-[#4b5563]">Develop key questions, methods, and scientific workflows.</p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6 text-left">
+          <div className="bg-[#fff3e0] rounded-lg shadow p-6 text-left">
             <h3 className="font-semibold text-[#232946]">Wave 2 – Data Collection</h3>
             <p className="text-[#4b5563]">Collect, analyze, and structure your research data.</p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6 text-left">
+          <div className="bg-[#ede7f6] rounded-lg shadow p-6 text-left">
             <h3 className="font-semibold text-[#232946]">Wave 3 – Drafting</h3>
             <p className="text-[#4b5563]">Transform your analysis into structured research drafts.</p>
           </div>

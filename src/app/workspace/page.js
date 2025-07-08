@@ -179,12 +179,19 @@ export default function Workspace() {
 
       {/* Right Sidebar */}
       <aside className="w-[370px] min-w-[300px] max-w-[400px] bg-white border-l border-[#e5e7eb] px-6 py-6 shadow-lg flex flex-col overflow-y-auto">
-        <div className="text-lg font-bold text-[#232946] mb-4">Waves</div>
-        <div className="flex-1 overflow-y-auto flex flex-col gap-4">
+        <div className="text-lg font-bold text-[#232946] mb-4">Current Stage</div>
+        <div className="flex-0.2overflow-y-auto flex flex-col gap-4">
           <div className="bg-[#f8fafc] rounded-xl p-4 shadow flex flex-col gap-1">
-            <div className="text-[#232946] font-semibold text-base mb-1">Wave1</div>
-            <div className="text-xs text-gray-500 mb-1">wave2</div>
-            <div className="text-[#4b5563] text-sm line-clamp-3">wave3</div>
+            <div className="text-[#232946] font-semibold text-base mb-1">Wave 1a - Idea Generation</div>
+            <div className="text-xs text-gray-500 mb-1">Wave 1b - Critical Questioning</div>
+            <div className="text-gray-500 text-xs line-clamp-3">Wave 2 - Data Collection</div>
+          </div>
+        </div>
+        <div className="text-lg font-bold text-[#232946] mb-6 mt-4">Agent in Use</div>
+        <div className="flex-0.2overflow-y-auto flex flex-col gap-4">
+          <div className="bg-[#f8fafc] rounded-xl p-4 shadow flex flex-col gap-1">
+            <div className="text-[#232946] font-semibold text-base mb-1">Thesis Gate</div>
+            <div className="text-xs text-gray-500 mb-1">Thesis review and defense preparation support</div>
           </div>
         </div>
       </aside>
