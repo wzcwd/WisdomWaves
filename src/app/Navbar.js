@@ -24,12 +24,11 @@ export default function Navbar() {
           <Link href="#" className="hover:underline">Contact Us</Link>
         </div>
       ) : (
-        <div className="flex items-center gap-6 text-[#253047] font-semibold text-lg font-serif">
+        <div className="flex items-center gap-8 text-[#253047] font-semibold text-lg font-serif">
           <Link href="#" className="hover:underline">Learn More</Link>
           <Link href="#" className="hover:underline">Contact Us</Link>
-          <div className="flex items-center gap-2">
-            <Image src="/user-profile.svg" alt="User Icon" width={32} height={32} className="rounded-full" />
-            <span className="text-sm">User</span>
+          <div className="flex items-center gap-2">   
+            <span className="text-lg">User</span>
           </div>
         </div>
       )}
